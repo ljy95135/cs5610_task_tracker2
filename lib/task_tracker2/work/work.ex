@@ -307,6 +307,9 @@ defmodule TaskTracker2.Work do
       {:error, %Ecto.Changeset{}}
 
   """
+  def get_the_null_timeblock() do
+  end
+
   def update_time_block(%TimeBlock{} = time_block, attrs) do
     time_block
     |> TimeBlock.changeset(attrs)

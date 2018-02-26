@@ -26,7 +26,47 @@ function delete_click(ev) {
   delete_time(time_id);
 }
 
-// TODO: response delete two time blocks and buttons?
+function start_click(ev){
+  let btn = $(ev.target);
+}
+
+function update_click(ev) {
+  let btn = $(ev.target);
+  let time_id = btn.data('update-id');
+  let task_id = btn.data('task-id');
+
+  let start_date = $('#input-start-date-'+time_id).val();
+  let start_time = $('#input-start-time-'+time_id).val();
+  let end_date = $('#input-end-date-'+time_id).val();
+  let end_time = $('#input-end-time-'+time_id).val();
+
+  let start = start_date + 'T' + start_time + '.000000';
+  let end = end_date + 'T' + end_time + '.000000';
+
+  update_time(time_id, start, end, task_id);
+}
+
+function update_time(time_id, startDT, endDT, task_id){
+  let time_id_int = parseInt(time_id);
+
+  let text = JSON.stringify({
+    id : time_id_int,
+    time_block: {
+        start: startDT,
+        end: endDT
+      },
+  });
+
+  $.ajax(time_path + "/" + time_id, {
+    method: "patch",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => { console.log(resp) },
+    error: (resp) => { console.log(resp)},
+  });
+}
+
 function delete_time(time_id) {
   $.ajax(time_path + "/" + time_id, {
     method: "delete",
@@ -38,8 +78,7 @@ function delete_time(time_id) {
 }
 
 function delete_div(divID){
-  console.log("Do delete "+divID);
-  $('.follow-button').each( (_, div) => {
+  $('.div-time-block').each( (_, div) => {
     if (divID == $(div).data('div-id')) {
       console.log(div);
       $(div).remove();
@@ -47,22 +86,21 @@ function delete_div(divID){
   });
 }
 
-// TODO: how to get the new time?
-function update_time(time_id) {
 
-}
-
-// TODO: set end-time or begin a new time
 function start_time(time_id){
 
 }
 
 function init_buttons() {
-  if (!$('.delete-button')) {
-    return;
+  $(".start-button").click(start_click);
+  if ($('.delete-button')) {
+    $(".delete-button").click(delete_click);
+  }
+  if ($('.update-button')) {
+    $(".update-button").click(update_click);
   }
 
-  $(".delete-button").click(delete_click);
+
 }
 
 $(init_buttons);

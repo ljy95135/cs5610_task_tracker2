@@ -4,7 +4,7 @@ defmodule TaskTracker2Web.TimeBlockController do
   alias TaskTracker2.Work
   alias TaskTracker2.Work.TimeBlock
 
-  action_fallback TaskTracker2Web.FallbackController
+  action_fallback(TaskTracker2Web.FallbackController)
 
   def index(conn, _params) do
     time_blocks = Work.list_time_blocks()
@@ -35,6 +35,7 @@ defmodule TaskTracker2Web.TimeBlockController do
 
   def delete(conn, %{"id" => id}) do
     time_block = Work.get_time_block!(id)
+
     with {:ok, %TimeBlock{}} <- Work.delete_time_block(time_block) do
       send_resp(conn, :no_content, "")
     end

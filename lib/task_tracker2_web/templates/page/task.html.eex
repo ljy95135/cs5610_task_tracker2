@@ -74,19 +74,32 @@
               "Not finished"
             end %></strong></p>
             <%= Enum.map post.time_block, fn t -> %>
-              <div data-div-id= "<%= "div" <> Integer.to_string(t.id) %>" >
-                <input type="date" value="<%= NaiveDateTime.to_date(t.start) %>">
-                <input type="time"
-                       value="<%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>">
+              <div
+                class="div-time-block"
+                data-div-id= "<%= "div" <> Integer.to_string(t.id) %>">
+                <input
+                  type="date" value="<%= NaiveDateTime.to_date(t.start) %>"
+                  id="<%= "input-start-date-" <> Integer.to_string(t.id) %>">
+                <input
+                  type="time"
+                  id="<%= "input-start-time-" <> Integer.to_string(t.id) %>"
+                  value="<%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>">
                 <br>
-                <input type="date" value="<%= NaiveDateTime.to_date(t.end) %>">
-                <input type="time"
-                       value="<%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>">
+                <input
+                  type="date" value="<%= NaiveDateTime.to_date(t.end) %>"
+                  id="<%= "input-end-date-" <> Integer.to_string(t.id) %>">
+                <input
+                  type="time"
+                  id="<%= "input-end-time-" <> Integer.to_string(t.id) %>"
+                  value="<%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>">
                 <br>
                 <button
                   class="delete-button btn btn-danger"
                   data-delete-id="<%= t.id %>">Delete</button>
-                <button class="update-button btn primary">Update</button>
+                <button
+                  class="update-button btn primary"
+                  data-task-id = "<%= post.id %>"
+                  data-update-id="<%= t.id %>">Update</button>
               </div>
               <br>
             <% end %>

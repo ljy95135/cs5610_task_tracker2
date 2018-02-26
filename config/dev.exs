@@ -11,8 +11,14 @@ config :task_tracker2, TaskTracker2Web.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -51,8 +57,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :task_tracker2, TaskTracker2.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "task_tracker2",
+  password: "Ahxe2boo8Hoo",
   database: "task_tracker2_dev",
   hostname: "localhost",
   pool_size: 10

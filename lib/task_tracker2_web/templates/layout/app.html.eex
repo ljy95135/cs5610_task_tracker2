@@ -13,17 +13,25 @@
 
   <body>
     <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= if get_flash(@conn, :info) do %>
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <% end %>
+      <%= if get_flash(@conn, :error) do %>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <% end %>
+      <div class="row">
+        <div class="col-3 offset-9">
+          <%= if @current_user do %>
+            <p>
+              Logged in as: <%= link @current_user.name, to: "/users/" <> Integer.to_string(@current_user.id) %> |
+              <%= link "Log Out", to: "/session", method: :delete %>
+            </p>
+          <% else %>
+            <p>Not logged in.</p>
+          <% end %>
+        </div>
+      </div>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

@@ -1,4 +1,9 @@
 <%= if @current_user do %>
+  <script>
+   window.current_user_id = "<%= @current_user.id %>";
+   window.time_path = "<%= time_block_path(@conn, :index) %>";
+  </script>
+
   <div class="row">
     <div class="col">
       <%= form_tag("/create_with_login", method: :post) do %>
@@ -23,51 +28,99 @@
       <% end %>
     </div>
   </div>
-<% end %>
 
-<h1>User Info</h1>
+  <h1>User Info</h1>
+  <p>name: <%= @current_user.name %></p>
+  <p>email: <%= @current_user.email %></p>
+  <p>user id: <%= @current_user.id %></p>
 
-
-<h1>Your Tasks</h1>
-<%= Enum.map @tasks_your, fn post -> %>
-<div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="card-title"><%= post.user_from.name %> gave you this work</h6>
-        <p class = "text-info"><%= post.title %></p>
-        <p><%= post.body %></p>
-        <p><strong><%=
-        if post.finished do
-          "Finished"
-        else
-          "Not finished"
-        end %></strong></p>
-        <%= link "Edit", to: task_path(@conn, :edit, post.id) %>
+  <h2>User's manager</h2>
+  <%= Enum.map @managers, fn manager -> %>
+    <div class="row">
+      <div class="col">
+        <p>manager's name: <%= manager.manager.name %></p>
+        <p>manager's email: <%= manager.manager.email %></p>
+        <p>manager's id: <%= manager.manager.id %></p>
+        <hr />
       </div>
     </div>
-  </div>
-</div>
-<% end %>
+  <% end %>
 
-<h1>The tasks you assign to others</h1>
-<%= Enum.map @tasks_your, fn post -> %>
-<div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="card-title">You gave this work to <%= post.user_from.name %></h6>
-        <p class = "text-info"><%= post.title %></p>
-        <p><%= post.body %></p>
-        <p><strong><%=
-        if post.finished do
-          "Finished"
-        else
-          "Not finished"
-        end %></strong></p>
-        <%= link "Edit", to: task_path(@conn, :edit, post.id) %>
+  <h2>You Manage</h2>
+  <%= Enum.map @manageds, fn p -> %>
+    <div class="row">
+      <div class="col">
+        <p>name: <%= p.managed.name %></p>
+        <p>email: <%= p.managed.email %></p>
+        <p>id: <%= p.managed.id %></p>
+        <hr />
       </div>
     </div>
-  </div>
-</div>
+  <% end %>
+
+  <h1>Your Tasks</h1>
+  <%= Enum.map @tasks_your, fn post -> %>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-title"><%= post.user_from.name %> gave you this work</h6>
+            <p class = "text-info"><%= post.title %></p>
+            <p><%= post.body %></p>
+            <p><strong><%=
+            if post.finished do
+              "Finished"
+            else
+              "Not finished"
+            end %></strong></p>
+            <%= Enum.map post.time_block, fn t -> %>
+              <div data-div-id= "<%= "div" <> Integer.to_string(t.id) %>" >
+                <input type="date" value="<%= NaiveDateTime.to_date(t.start) %>">
+                <input type="time"
+                       value="<%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>">
+                <br>
+                <input type="date" value="<%= NaiveDateTime.to_date(t.end) %>">
+                <input type="time"
+                       value="<%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>">
+                <br>
+                <button
+                  class="delete-button btn btn-danger"
+                  data-delete-id="<%= t.id %>">Delete</button>
+                <button class="update-button btn primary">Update</button>
+              </div>
+              <br>
+            <% end %>
+            <button class="time-button btn btn-secondary"
+                    data-user-id="<%= @current_user.id %>">
+              Start
+            </button>
+            <br /><br />
+            <%= link "Edit", to: task_path(@conn, :edit, post.id) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <h1>The tasks you assign to others</h1>
+    <%= Enum.map @tasks_your, fn post -> %>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-title">You gave this work to <%= post.user_from.name %></h6>
+            <p class = "text-info"><%= post.title %></p>
+            <p><%= post.body %></p>
+            <p><strong><%=
+            if post.finished do
+              "Finished"
+            else
+              "Not finished"
+            end %></strong></p>
+            <%= link "Edit", to: task_path(@conn, :edit, post.id) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>

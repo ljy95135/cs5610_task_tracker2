@@ -24,7 +24,7 @@
         <div class="col-3 offset-9">
           <%= if @current_user do %>
             <p>
-              Logged in as: <%= link @current_user.name, to: "/users/" <> Integer.to_string(@current_user.id) %> |
+              Logged in as: <%= link @current_user.name, to: "/feed" %> |
               <%= link "Log Out", to: "/session", method: :delete %>
             </p>
           <% else %>

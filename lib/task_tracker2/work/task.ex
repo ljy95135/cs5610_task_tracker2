@@ -4,6 +4,7 @@ defmodule TaskTracker2.Work.Task do
   import Ecto.Query
   alias TaskTracker2.Work.Task
   alias TaskTracker2.Work.Management
+  alias TaskTracker2.Work.TimeBlock
 
   schema "tasks" do
     field(:body, :string)
@@ -12,6 +13,8 @@ defmodule TaskTracker2.Work.Task do
 
     belongs_to(:user_from, TaskTracker2.Accounts.User, foreign_key: :from_id)
     belongs_to(:user_to, TaskTracker2.Accounts.User, foreign_key: :to_id)
+
+    has_many(:time_block, TimeBlock)
 
     timestamps()
   end

@@ -34,6 +34,11 @@ defmodule TaskTracker2Web.Router do
     delete("/session", SessionController, :delete)
   end
 
+  scope "/api/v1", TaskTracker2Web do
+    pipe_through(:api)
+    resources("/time_blocks", TimeBlockController, except: [:new])
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", TaskTracker2Web do
   #   pipe_through :api

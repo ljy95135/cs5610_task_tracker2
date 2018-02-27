@@ -21,10 +21,11 @@
         <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <% end %>
       <div class="row">
-        <div class="col-3 offset-9">
+        <div class="col-4 offset-8">
           <%= if @current_user do %>
             <p>
               Logged in as: <%= link @current_user.name, to: "/feed" %> |
+              <%= link "Add managements", to: "/managements" %> | 
               <%= link "Log Out", to: "/session", method: :delete %>
             </p>
           <% else %>

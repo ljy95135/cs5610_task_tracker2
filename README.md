@@ -37,10 +37,10 @@ These are things I think I can do to make it better but the task not requires an
 
 
 You can see some screenshots. Or just try and enjoy the feature of AJAX!
-![alt text](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/01.png "Image 1")
-![alt text](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/02.png "Image 2")
-![alt text](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/03.png "Image 3")
-![alt text](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/04.png "Image 3")
+![img size](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/01.png){:height="50%" width="50%"}
+![img size](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/02.png){:height="50%" width="50%"}
+![img size](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/03.png){:height="50%" width="50%"}
+![img size](https://raw.githubusercontent.com/ljy95135/task_tracker2/master/screenshots/04.png){:height="50%" width="50%"}
 
 &nbsp;
 &nbsp;

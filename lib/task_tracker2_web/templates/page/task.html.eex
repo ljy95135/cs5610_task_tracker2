@@ -73,38 +73,43 @@
             else
               "Not finished"
             end %></strong></p>
-            <%= Enum.map post.time_block, fn t -> %>
-              <div
-                class="div-time-block"
-                data-div-id= "<%= "div" <> Integer.to_string(t.id) %>">
-                <input
-                  type="date" value="<%= NaiveDateTime.to_date(t.start) %>"
-                  id="<%= "input-start-date-" <> Integer.to_string(t.id) %>">
-                <input
-                  type="time"
-                  id="<%= "input-start-time-" <> Integer.to_string(t.id) %>"
-                  value="<%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>">
+            <div id="<%= "div-blocks-task-" <> Integer.to_string(post.id) %>">
+              <%= Enum.map post.time_block, fn t -> %>
+                <div
+                  class="div-time-block"
+                  data-div-id= "<%= "div" <> Integer.to_string(t.id) %>">
+                  <span>start time: </span>
+                  <input
+                    type="date" value="<%= NaiveDateTime.to_date(t.start) %>"
+                    id="<%= "input-start-date-" <> Integer.to_string(t.id) %>">
+                  <input
+                    type="time"
+                    id="<%= "input-start-time-" <> Integer.to_string(t.id) %>"
+                    value="<%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>">
+                  <br>
+                  <span>end time:&nbsp;</span>
+                  <input
+                    type="date" value="<%= NaiveDateTime.to_date(t.end) %>"
+                    id="<%= "input-end-date-" <> Integer.to_string(t.id) %>">
+                  <input
+                    type="time"
+                    id="<%= "input-end-time-" <> Integer.to_string(t.id) %>"
+                    value="<%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>">
+                  <br>
+                  <button
+                    class="delete-button btn btn-danger"
+                    data-delete-id="<%= t.id %>">Delete</button>
+                  <button
+                    class="update-button btn primary"
+                    data-task-id = "<%= post.id %>"
+                    data-update-id="<%= t.id %>">Update</button>
+                </div>
                 <br>
-                <input
-                  type="date" value="<%= NaiveDateTime.to_date(t.end) %>"
-                  id="<%= "input-end-date-" <> Integer.to_string(t.id) %>">
-                <input
-                  type="time"
-                  id="<%= "input-end-time-" <> Integer.to_string(t.id) %>"
-                  value="<%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>">
-                <br>
-                <button
-                  class="delete-button btn btn-danger"
-                  data-delete-id="<%= t.id %>">Delete</button>
-                <button
-                  class="update-button btn primary"
-                  data-task-id = "<%= post.id %>"
-                  data-update-id="<%= t.id %>">Update</button>
-              </div>
-              <br>
-            <% end %>
-            <button class="time-button btn btn-secondary"
-                    data-user-id="<%= @current_user.id %>">
+              <% end %>
+            </div>
+            <button class="start-button btn btn-secondary"
+                    data-task-id = "<%= post.id %>"
+                    data-start-item="">
               Start
             </button>
             <br /><br />
@@ -131,6 +136,18 @@
               "Not finished"
             end %></strong></p>
             <%= link "Edit", to: task_path(@conn, :edit, post.id) %>
+            <br />
+            <%= Enum.map post.time_block, fn t -> %>
+              <span>start time: </span>
+              <%= NaiveDateTime.to_date(t.start) %>
+              <%= NaiveDateTime.truncate(t.start,:second)|>NaiveDateTime.to_time() %>
+              <br>
+              <span>end time:&nbsp;</span>
+              <%= NaiveDateTime.to_date(t.end) %>
+              <%= NaiveDateTime.truncate(t.end,:second)|>NaiveDateTime.to_time() %>
+              <br>
+              <hr>
+            <% end %>
           </div>
         </div>
       </div>
